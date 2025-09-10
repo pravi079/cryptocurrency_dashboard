@@ -29,3 +29,13 @@ This project is built with:
 - Vibe coding with custom prompts to get the desired outcome
 - manual adjustments maded for extracting the vanry coin and displaying it as the first pair.
 
+
+# Screenshots
+
+<img width="1357" height="844" alt="image" src="https://github.com/user-attachments/assets/c9958f57-7dbb-41a1-8546-42e40edaaaa7" />
+<img width="1370" height="838" alt="image" src="https://github.com/user-attachments/assets/f2c8448c-5e64-4bb1-9716-d29df1816d10" />
+<img width="1366" height="794" alt="image" src="https://github.com/user-attachments/assets/56b8fc21-4013-459a-b333-367fe3b04c9f" />
+
+
+
+
