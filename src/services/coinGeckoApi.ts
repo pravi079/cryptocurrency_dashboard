@@ -66,7 +66,24 @@ export const coinGeckoApi = {
         price_change_percentage: '24h',
       },
     });
-    return response.data;
+    const coins: Coin[] = response.data;
+
+    // Ensure Vanry (vanar-chain) is first on page 1
+    if (page === 1) {
+      try {
+        const vanryResponse = await api.get(`/coins/markets`, {
+          params: { vs_currency: 'usd', ids: 'vanar-chain' },
+        });
+        const vanryCoin: Coin = vanryResponse.data[0];
+        const filteredCoins = coins.filter((c) => c.id !== 'vanar-chain');
+        return [vanryCoin, ...filteredCoins];
+      } catch (err) {
+        console.warn("Vanry not found, fallback to normal list");
+        return coins;
+      }
+    }
+
+    return coins;
   },
 
   getCoin: async (id: string): Promise<CoinDetail> => {
@@ -103,3 +120,4 @@ export const coinGeckoApi = {
     return response.data.coins;
   },
 };
+
