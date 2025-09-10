@@ -42,7 +42,8 @@ export function CoinDetailModal({ coinId, isOpen, onClose }: CoinDetailModalProp
     fetchCoinData();
   }, [coinId, isOpen, timeframe]);
 
-  const formatPrice = (price: number) => {
+  const formatPrice = (price: number | undefined | null) => {
+    if (typeof price !== 'number' || isNaN(price)) return 'N/A';
     if (price < 0.01) return `$${price.toFixed(6)}`;
     if (price < 1) return `$${price.toFixed(4)}`;
     return `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -107,7 +108,7 @@ export function CoinDetailModal({ coinId, isOpen, onClose }: CoinDetailModalProp
               <div className="bg-surface-elevated rounded-lg p-4">
                 <h4 className="text-sm font-medium text-muted-foreground mb-2">Market Cap</h4>
                 <div className="text-2xl font-bold text-foreground">
-                  ${coin.market_cap?.toLocaleString() || 'N/A'}
+                  {coin.market_cap ? `$${coin.market_cap.toLocaleString()}` : 'N/A'}
                 </div>
               </div>
             </div>
