@@ -38,4 +38,74 @@ This project is built with:
 
 
 
-
+CLI (do not change flags)
+We will run exactly:
+python run_agent_hybrid.py \
+--batch sample_questions_hybrid_eval.jsonl \
+--out outputs_hybrid.jsonl
+Each line in outputs_hybrid.jsonl must follow the Output Contract.
+Output Contract (per question)
+{
+"id": "
+...
+"
+,
+"final_answer": <matches format_hint>,
+"sql": "<last executed SQL or empty if RAG-only>"
+,
+"confidence": 0.0,
+"explanation": "<= 2 sentences>"
+,
+"citations": [
+"Orders"
+,
+"Order Details"
+,
+"Products"
+,
+"Customers"
+,
+"kpi_definitions::chunk2"
+,
+"marketing_calendar::chunk0"
+]
+}
+●
+final_answer: must match the input format_hint exactly (e.g., int, float, object,
+or list of objects). Floats graded with ±0.01 tolerance.
+●
+citations: include every DB table actually used and every doc chunk ID you relied on
+(e.g., marketing_calendar::chunk0).
+Acceptance Criteria & Scoring
+●
+Correctness (40%) — values match expected (±0.01 for floats), and types match
+format_hint.
+●
+DSPy impact (20%) — a measurable improvement on the chosen module (brief
+table/notes).
+●
+Resilience (20%) — a repair/validation loop that actually helps (e.g., raises valid-SQL or
+format-adherence rate).
+●
+Clarity (20%) — readable code, short README, sensible confidence, proper citations &
+trace.
+Implementation Hints
+Retrieval
+●
+You can implement TF-IDF (no downloads) or BM25 (e.g., rank-bm25) over
+paragraph-level chunks.
+●
+Keep chunks small; store id, content, source (filename), score.
+SQL
+●
+Prefer Orders + "Order Details" + Products joins.
+●
+Revenue: SUM(UnitPrice * Quantity * (1 - Discount)) from "Order
+Details"
+.
+●
+If needed, map categories via Categories join through Products.CategoryID.
+Confidence
+●
+Heuristics are fine: combine retrieval score coverage + SQL success + non-empty rows;
+down-weight when repaired.
