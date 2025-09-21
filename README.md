@@ -121,3 +121,17 @@ No paid APIs or external calls at inference time.
 Estimated time: 2–3 focused hours
 Runs on: normal PC (CPU ok), 16GB RAM recommended
 Local model constraint: Phi-3.5-mini-instruct via Ollama (or llama.cpp GGUF)
+
+
+
+Tables you’ll use (canonical Northwind names):
+●
+Orders(OrderID, CustomerID, EmployeeID, OrderDate, …)
+●
+"Order Details"(OrderID, ProductID, UnitPrice, Quantity, Discount)
+●
+Products(ProductID, ProductName, SupplierID, CategoryID, UnitPrice, …)
+●
+Customers(CustomerID, CompanyName, Country, …)
+●
+(You may use Categories, Suppliers as needed.)
